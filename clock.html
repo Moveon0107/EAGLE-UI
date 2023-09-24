@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            :root {
+                --color: rgb(33, 34, 49);
+                --clock-radius: 160px;
+            }
+
+            body {
+                background-color: var(--color);
+            }
+
+            .panel {
+                margin-left: 10%;
+                margin-top: 5%;
+                width: 80%;
+                height: 400px;
+                background-color: var(--color);
+                box-shadow: 6px 6px 10px 2px black;
+                border-radius: 8px;
+            }
+
+            .clock-body::before {
+                content: '';
+                width: calc(2*var(--clock-radius) - 120px);
+                height: calc(2*var(--clock-radius) - 120px);
+                background-color: rgba(0, 0, 0, 0.2);
+                border-radius: calc(var(--clock-radius) - 60px);
+            }
+
+            .clock-body {
+                box-sizing: border-box;
+                display: flex;
+                position: absolute;
+                margin-top: 40px;
+                margin-left: 40px;
+                width: calc(2*var(--clock-radius));
+                height: calc(2*var(--clock-radius));
+                box-shadow: 4px 4px 8px 2px black;
+                background-color: rgba(0, 0, 0, 0.163);
+                border-radius: var(--clock-radius);
+                justify-content: center;
+                align-items: center;
+            }
+
+            .clock-body::after {
+                content: '';
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                border: 2px solid rgba(255, 255, 255, 0.5);
+                background-color: black;
+                border-radius: 50%;
+                box-shadow: 0px 0px 2px 2px rgba(54, 89, 84, 0.396);
+            }
+
+            .clock-body span {
+                color: white;
+                opacity: 0.5;
+                font-size: 32px;
+                position: absolute;
+                text-align: center;
+                text-shadow: 0px 0px 4px rgba(255, 255, 255, 0.5);
+                transform:
+                    rotate(calc(30deg * var(--i)))
+                    translateY(calc(-1*var(--clock-radius) + 32px))
+                    rotate(calc(-30deg * var(--i)));
+            }
+
+            .clock-body span:nth-of-type(2) {
+                color: rgb(255, 116, 116);
+                text-shadow: 0px 0px 4px rgba(255, 116, 116, 0.5);
+            }
+
+            .clock-body span:nth-of-type(4) {
+                color: rgb(255, 116, 255);
+                text-shadow: 0px 0px 4px rgba(255, 116, 255, 0.5);
+            }
+
+            .clock-body span:nth-of-type(6) {
+                color: rgb(116, 116, 255);
+                text-shadow: 0px 0px 4px rgba(116, 116, 255, 0.5);
+            }
+
+            .clock-body span:nth-of-type(8) {
+                color: rgb(116, 255, 255);
+                text-shadow: 0px 0px 4px rgba(116, 255, 255, 0.5);
+            }
+
+            .clock-body span:nth-of-type(10) {
+                color: rgb(116, 255, 116);
+                text-shadow: 0px 0px 4px rgba(116, 255, 116, 0.5);
+            }
+
+            .clock-body span:nth-of-type(12) {
+                color: rgb(255, 255, 116);
+                text-shadow: 0px 0px 4px rgba(255, 255, 116, 0.5);
+            }
+
+            .indicator {
+                position: absolute;
+                bottom: 50%;
+                transform-origin: bottom;
+                opacity: 0.5;
+            }
+
+            .indicator:nth-of-type(1) {
+                width: 5px;
+                height: 20%;
+                background-color: teal;
+            }
+
+            .indicator:nth-of-type(2) {
+                width: 3px;
+                height: 26%;
+                background-color: aqua;
+            }
+
+            .indicator:nth-of-type(3) {
+                width: 2px;
+                height: 32%;
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="panel">
+            <div class="clock-body">
+                <span style="--i: 1">1</span>
+                <span style="--i: 2">2</span>
+                <span style="--i: 3">3</span>
+                <span style="--i: 4">4</span>
+                <span style="--i: 5">5</span>
+                <span style="--i: 6">6</span>
+                <span style="--i: 7">7</span>
+                <span style="--i: 8">8</span>
+                <span style="--i: 9">9</span>
+                <span style="--i: 10">10</span>
+                <span style="--i: 11">11</span>
+                <span style="--i: 12">12</span>
+
+                <div class="indicator" id="hour"></div>
+                <div class="indicator" id="minute"></div>
+                <div class="indicator" id="second"></div>
+            </div>
+        </div>
+
+        <script>
+            let hour = document.getElementById('hour');
+            let minute = document.getElementById('minute');
+            let second = document.getElementById('second');
+
+            setInterval(() => {
+                let date = new Date();
+                let hourAngle = date.getHours() * 30;
+                let minuteAngle = date.getMinutes() * 6;
+                let secondAngle = date.getSeconds() * 6;
+
+                hour.style.transform = `rotate(${hourAngle + minuteAngle/12 + secondAngle/720}deg)`;
+                minute.style.transform = `rotate(${minuteAngle + secondAngle/60}deg)`;
+                second.style.transform = `rotate(${secondAngle}deg)`;
+            })
+        </script>
+    </body>
+</html>
